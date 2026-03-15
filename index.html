@@ -13,10 +13,14 @@
             maxRatio: 16 / 9,
             minRatio: 9 / 16,
             title: 'Subway Surfers',
-            numScreenshots: 4,
-            unityVersion: '2019.4.18f1',
+            // unity.js reads this to create the <script> tag for the loader
+            unityWebglLoaderUrl: './UnityLoader.2019.2.js',
             unityWebglBuildUrl: 'Build/SanFrancisco.json',
             fileSize: 35,
+            // set numScreenshots to 0 so the slideshow loop never runs
+            numScreenshots: 0,
+            // blank thumbnail so unity.js img element doesn't 404
+            thumbnail: 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=',
             cachedDecompressedFileSizes: {
                 'SanFrancisco.asm.code.unityweb':       9077143,
                 'SanFrancisco.asm.framework.unityweb':  86369,
@@ -58,10 +62,9 @@
     <!-- Unity WASM module (must load before UnityLoader) -->
     <script src="./4399.js"></script>
 
-    <!-- Unity loader -->
-    <script src="./UnityLoader.2019.2.js"></script>
-
-    <!-- Boot logic + initPokiBridge (builds DOM and fires window.onload) -->
+    <!-- Boot logic + initPokiBridge.
+         unity.js dynamically injects UnityLoader via unityWebglLoaderUrl,
+         so we do NOT load UnityLoader.2019.2.js separately here. -->
     <script src="./unity.js"></script>
 
 </body>
