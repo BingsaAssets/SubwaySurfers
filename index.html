@@ -1,72 +1,67 @@
 <!DOCTYPE html>
-
 <html lang="en-us">
 <head>
-<meta charset="utf-8">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Subway Surfers | Clean Port</title>
-<style>
-/* Full screen setup /
-body, html {
-margin: 0;
-padding: 0;
-width: 100%;
-height: 100%;
-background-color: #002B50; / Original SS background color */
-overflow: hidden;
-display: flex;
-align-items: center;
-justify-content: center;
-}
+    <meta charset="utf-8">
+    <title>Subway Surfers</title>
 
-    #gameContainer {
-        width: 100vw;
-        height: 100vh;
-    }
+    <script>
+        window.config = {
+            loader: 'unity',
+            debug: false,
+            maxRatio: 16 / 9,
+            minRatio: 9 / 16,
+            title: 'Subway Surfers',
+            numScreenshots: 4,
+            unityVersion: '2019.4.18f1',
+            unityWebglBuildUrl: 'Build/SanFrancisco.json',
+            fileSize: 35,
+            cachedDecompressedFileSizes: {
+                'SanFrancisco.asm.code.unityweb':       9077143,
+                'SanFrancisco.asm.framework.unityweb':  86369,
+                'SanFrancisco.asm.memory.unityweb':     951447,
+                'SanFrancisco.data.unityweb':           18323917,
+                'SanFrancisco.wasm.code.unityweb':      7279617,
+                'SanFrancisco.wasm.framework.unityweb': 90693,
+            },
+        };
+    </script>
 
-    canvas {
-        width: 100%;
-        height: 100%;
-        display: block;
-    }
-</style>
+    <!-- PokiSDK stub — satisfies the game's C# bridge without loading any ads -->
+    <script>
+        window.PokiSDK = {
+            init:                           function() { return Promise.resolve(); },
+            commercialBreak:                function() { return Promise.resolve(); },
+            rewardedBreak:                  function() { return Promise.resolve(false); },
+            gameLoadingStart:               function() {},
+            gameLoadingFinished:            function() {},
+            gameLoadingProgress:            function() {},
+            gameInteractive:                function() {},
+            roundStart:                     function() {},
+            roundEnd:                       function() {},
+            gameplayStart:                  function() {},
+            gameplayStop:                   function() {},
+            happyTime:                      function() {},
+            setDebug:                       function() {},
+            logError:                       function() {},
+            customEvent:                    function() {},
+            setPlayerAge:                   function() {},
+            togglePlayerAdvertisingConsent: function() {},
+            displayAd:                      function() {},
+            destroyAd:                      function() {},
+            getLeaderboard:                 function() { return Promise.resolve([]); },
+            sendHighscore:                  function() {},
+        };
+    </script>
 
+    <!-- Unity WASM module (must load before UnityLoader) -->
+    <script src="./4399.js"></script>
 
+    <!-- Unity loader -->
+    <script src="./UnityLoader.2019.2.js"></script>
+
+    <!-- Boot logic + initPokiBridge (uses window.onload internally) -->
+    <script src="./unity.js"></script>
 </head>
 <body>
-<div id="gameContainer"></div>
-
-<!-- We use the loader you have in your GitHub root -->
-<script src="UnityLoader.2019.2.js"></script>
-
-<script>
-    /**
-     * CLEAN BOOT LOGIC
-     * We skip master-loader.js because it contains the ad-logic and domain locks.
-     * We point directly to your 'Build' folder assets.
-     */
-    const gameInstance = UnityLoader.instantiate("gameContainer", "Build/SanFrancisco.json", {
-        onProgress: UnityProgress
-    });
-
-    function UnityProgress(gameInstance, progress) {
-        if (!gameInstance.Module) return;
-        // The game is loading... you could add a custom logo here if you wanted.
-        if (progress === 1) {
-            console.log("Subway Surfers San Francisco Loaded Successfully.");
-        }
-    }
-
-    // Handle window resizing to keep the game crisp
-    window.addEventListener('resize', () => {
-        const canvas = document.querySelector('canvas');
-        if (canvas) {
-            canvas.style.width = "100%";
-            canvas.style.height = "100%";
-        }
-    });
-</script>
-
-
 </body>
 </html>
